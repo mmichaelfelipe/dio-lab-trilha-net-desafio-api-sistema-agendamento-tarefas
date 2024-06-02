@@ -52,8 +52,14 @@ public class TarefaController : ControllerBase
     [HttpGet("ObterPorData")]
     public IActionResult ObterPorData(DateTime data)
     {
-        var tarefa = _context.Tarefas.Where(x => x.Data.Date == data.Date);
-        return Ok(tarefa);
+        var tarefas = _context.Tarefas.Where(x => x.Data.Date == data.Date);
+
+        if (!tarefas.Any())
+        {
+            return NotFound();
+        }
+
+        return Ok(tarefas);
     }
 
     [HttpGet("ObterPorStatus")]
